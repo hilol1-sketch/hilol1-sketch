@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday — For You</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  .bday-stage{
+    display:grid; grid-template-columns: 1fr 1fr; align-items:center;
+    gap: clamp(1.5rem, 5vw, 3.5rem);
+    padding: 2rem 1rem 1rem; position: relative;
+  }
+  .bday-stage .photo-frame{ justify-self: end; }
+  .bday-stage .pixel-block{ justify-self: start; }
+  @media (max-width: 640px){
+    .bday-stage{ grid-template-columns: 1fr; }
+    .bday-stage .photo-frame,
+    .bday-stage .pixel-block{ justify-self: center; }
+  }
+  .photo-frame{
+    width: min(260px, 70vw);
+    background: var(--paper);
+    border-radius: 16px;
+    padding: .8rem .8rem 1.6rem;
+    box-shadow: 0 16px 34px var(--shadow), 0 2px 8px var(--shadow-soft);
+    transform: rotate(-4deg);
+    flex-shrink: 0;
+  }
+  .photo-frame img{
+    display:block; width: 100%; aspect-ratio: 1/1; object-fit: cover;
+    border-radius: 10px; background: var(--blush);
+  }
+  .photo-fallback{
+    width: 100%; aspect-ratio: 1/1; border-radius: 10px;
+    background: var(--blush);
+    border: 2px dashed var(--blush-deep);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:.5rem; color: var(--gold-deep); font-size:.78rem; text-align:center; padding: 1rem;
+  }
+  .photo-fallback svg{ width: 34px; height: 34px; }
+  .photo-frame .cap{
+    text-align:center; margin-top:.7rem; font-family: var(--font-display);
+    color: var(--gold-deep); font-size: .85rem;
+  }
+
+  .pixel-block{ text-align:center; max-width: 420px; }
+  .pixel-text{
+    font-family: 'Press Start 2P', var(--font-display);
+    line-height: 1.9;
+    color: var(--rose-deep);
+    text-shadow: 3px 3px 0 var(--lilac);
+    font-size: clamp(1.05rem, 4.2vw, 1.7rem);
+    margin: 0 0 .6rem;
+  }
+  .pixel-name{
+    font-family: 'Press Start 2P', var(--font-display);
+    color: var(--plum);
+    text-shadow: 3px 3px 0 var(--blush-deep);
+    font-size: clamp(1.3rem, 5.5vw, 2.1rem);
+    margin: 0 0 1rem;
+  }
+
+  .bloom-field{ position: fixed; inset: 0; pointer-events: none; z-index: 5; overflow: hidden; }
+  .bloom{
+    position: absolute; opacity: 0; transform: scale(.2);
+    animation: bloomIn .6s cubic-bezier(.2,1.4,.4,1) forwards;
+  }
+  @keyframes bloomIn{
+    to{ opacity: .9; transform: scale(1); }
+  }
+</style>
+</head>
+<body data-page="birthday">
+
+<div class="spark-field" aria-hidden="true"></div>
+<div class="bloom-field" id="bloomField" aria-hidden="true"></div>
+
+<a class="back-link" href="index.html">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg>
+  back
+</a>
+
+<main>
+  <section class="hero" style="padding-top: 3rem;">
+    <span class="eyebrow">✨ happy birthday to you</span>
+  </section>
+
+  <section class="bday-stage">
+    <div class="photo-frame">
+      <img src="photo.jpg" alt="a cute picture of you"
+        onerror="this.replaceWith(Object.assign(document.createElement('div'), {className:'photo-fallback', innerHTML: '&lt;svg viewBox=\'0 0 24 24\' fill=\'#FF9EC4\'&gt;&lt;path d=\'M12 21s-7.5-4.6-10.2-9C-0.4 8.6 1.6 4 5.7 4c2.1 0 3.6 1.1 4.3 2.4C10.7 5.1 12.2 4 14.3 4c4.1 0 6.1 4.6 3.9 8-2.7 4.4-10.2 9-10.2 9z\'/&gt;&lt;/svg&gt;&lt;span&gt;drop a photo named photo.jpg in this folder&lt;/span&gt;' }))">
+      <p class="cap">my favourite person</p>
+    </div>
+
+    <div class="pixel-block">
+      <p class="pixel-text">HAPPY BIRTHDAY</p>
+      <p class="pixel-name">SANYA</p>
+      <p class="lede" style="margin-top:.5rem;">this is your day sanu, i hope today feels exactly as good as you deserve.  i mean that love.</p>
+    </div>
+  </section>
+</main>
+
+<div class="next-wrap">
+  <a class="btn next-btn" href="gifts.html">
+    <span class="next-btn-inner">
+      <span class="sub">Next up</span>
+      <span>Next →</span>
+    </span>
+  </a>
+</div>
+
+<footer>made with love, just for u.</footer>
+
+<script src="script.js"></script>
+<script>
+  const FLOWER_COLORS = ['#FF6F9C', '#FF9EC4', '#F3D9F0', '#D98BA0', '#FFC2DA'];
+
+  function flowerSVG(color, size){
+    return `<svg width="${size}" height="${size}" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+      <g fill="${color}">
+        <circle cx="20" cy="10" r="7"/>
+        <circle cx="30" cy="20" r="7"/>
+        <circle cx="20" cy="30" r="7"/>
+        <circle cx="10" cy="20" r="7"/>
+      </g>
+      <circle cx="20" cy="20" r="6" fill="#FFF3E0"/>
+    </svg>`;
+  }
+
+  function bloomBurst(){
+    const field = document.getElementById('bloomField');
+    const count = window.innerWidth < 640 ? 12 : 20;
+    for(let i = 0; i < count; i++){
+      const el = document.createElement('div');
+      el.className = 'bloom';
+      const size = 20 + Math.random() * 26;
+      el.style.top = (Math.random() * 92) + '%';
+      el.style.left = (Math.random() * 94) + '%';
+      el.style.animationDelay = (Math.random() * 0.9) + 's';
+      el.innerHTML = flowerSVG(FLOWER_COLORS[i % FLOWER_COLORS.length], size);
+      field.appendChild(el);
+    }
+    setTimeout(() => { field.style.transition = 'opacity 1.2s ease'; field.style.opacity = '0.35'; }, 2600);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(bloomBurst, 350);
+  });
+</script>
+</body>
+</html>

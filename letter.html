@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Few Things — For You</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-page="letter">
+
+<div class="spark-field" aria-hidden="true"></div>
+
+<a class="back-link" href="index.html">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg>
+  back
+</a>
+
+<main>
+  <section class="hero" style="padding-top: 3rem;">
+    <span class="eyebrow">✨ one of two</span>
+    <h1>A few things<br>I keep meaning to say</h1>
+    <p class="lede">Nothing fancy — just some soft, honest paragraphs. Read them slow.</p>
+  </section>
+
+  <div style="display:flex; flex-direction:column; gap:1.1rem; margin-top:1.5rem;">
+
+    <article class="card">
+      <h3 style="font-size:1.15rem;">On ordinary days</h3>
+      <p>Most of what I love about you isn't the big, dramatic stuff it's the ordinary Tuesday-afternoon version of you. The way we talk, those weird silly things, the way a boring day becomes gud. I notice all of it, even when I don't say so.</p>
+    </article>
+
+    <article class="card">
+      <h3 style="font-size:1.15rem;">When you're hard on yourself</h3>
+      <p>I know you're your own toughest critic. So here's your reminder from me, you're da best. you're doing better than you think you are my love, i love you and im proud of u. happy birthday.</p>
+    </article>
+
+    <article class="card">
+      <h3 style="font-size:1.15rem;">A small promise</h3>
+      <p>I'm not going anywhere. On your loud days and your quiet days, your confident days and your unsure ones, I'm choosing you on all of them, on purpose, again and again. That's not a one-time thing I'm saying today; it's just true, every day, on repeat.</p>
+    </article>
+
+  </div>
+
+  <div class="heart-divider" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="#FF9EC4"><path d="M12 21s-7.5-4.6-10.2-9C-0.4 8.6 1.6 4 5.7 4c2.1 0 3.6 1.1 4.3 2.4C10.7 5.1 12.2 4 14.3 4c4.1 0 6.1 4.6 3.9 8-2.7 4.4-10.2 9-10.2 9z"/></svg>
+    <svg viewBox="0 0 24 24" fill="#F3D9F0"><path d="M12 21s-7.5-4.6-10.2-9C-0.4 8.6 1.6 4 5.7 4c2.1 0 3.6 1.1 4.3 2.4C10.7 5.1 12.2 4 14.3 4c4.1 0 6.1 4.6 3.9 8-2.7 4.4-10.2 9-10.2 9z"/></svg>
+    <svg viewBox="0 0 24 24" fill="#FF9EC4"><path d="M12 21s-7.5-4.6-10.2-9C-0.4 8.6 1.6 4 5.7 4c2.1 0 3.6 1.1 4.3 2.4C10.7 5.1 12.2 4 14.3 4c4.1 0 6.1 4.6 3.9 8-2.7 4.4-10.2 9-10.2 9z"/></svg>
+    <svg viewBox="0 0 24 24" fill="#F3D9F0"><path d="M12 21s-7.5-4.6-10.2-9C-0.4 8.6 1.6 4 5.7 4c2.1 0 3.6 1.1 4.3 2.4C10.7 5.1 12.2 4 14.3 4c4.1 0 6.1 4.6 3.9 8-2.7 4.4-10.2 9-10.2 9z"/></svg>
+  </div>
+
+  <section class="card" style="text-align:center;">
+    <h2 style="font-size:1.3rem;">Need a one-line boost?</h2>
+    <p style="color:#a97b8c; margin-bottom:1.1rem;">Pull a tiny note out of thin air.</p>
+    <button class="btn secondary" id="pullNote">Pull a note</button>
+    <p id="noteOutput" class="speech" style="display:none; margin-top:1.2rem;"></p>
+  </section>
+</main>
+
+<div class="next-wrap">
+  <a class="btn next-btn" href="cake.html">
+    <span class="next-btn-inner">
+      <span class="sub">Next up</span>
+      <span>Next →</span>
+    </span>
+  </a>
+</div>
+
+<script src="script.js"></script>
+<script>
+  const notes = [
+    "You make ordinary days feel like good ones.",
+    "you're my favourite notification sanu😻",
+    "You're doing better than u think hehe",
+    "i would choose you in every universe my love."
+  ];
+  const btn = document.getElementById('pullNote');
+  const out = document.getElementById('noteOutput');
+  btn.addEventListener('click', () => {
+    const pick = notes[Math.floor(Math.random() * notes.length)];
+    out.textContent = pick;
+    out.style.display = 'block';
+  });
+</script>
+</body>
+</html>

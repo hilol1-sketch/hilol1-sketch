@@ -1,0 +1,238 @@
+/* ============================================================
+   For You — a soft pink, page-by-page little surprise
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap');
+
+:root{
+  --cream: #FFF6F9;
+  --paper: #FFFFFF;
+  --blush: #FFDCEA;
+  --blush-deep: #FF9EC4;
+  --rose: #FF6F9C;
+  --rose-deep: #E14C7C;
+  --lilac: #F3D9F0;
+  --plum: #5C2A3E;
+  --ink: #4A2A38;
+  --gold: #D98BA0;
+  --gold-deep: #B85F7D;
+  --shadow: rgba(225, 76, 124, 0.18);
+  --shadow-soft: rgba(225, 76, 124, 0.1);
+
+  --font-display: 'Fredoka', ui-rounded, 'Segoe UI', sans-serif;
+  --font-body: 'Quicksand', ui-sans-serif, system-ui, sans-serif;
+
+  --radius-lg: 28px;
+  --radius-md: 18px;
+  --radius-sm: 12px;
+}
+
+*, *::before, *::after{ box-sizing: border-box; }
+
+html{ scroll-behavior: smooth; }
+
+body{
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 12% 8%, var(--blush) 0%, transparent 45%),
+    radial-gradient(circle at 88% 4%, var(--lilac) 0%, transparent 42%),
+    radial-gradient(circle at 90% 92%, var(--blush) 0%, transparent 42%),
+    var(--cream);
+  background-attachment: fixed;
+  position: relative;
+  overflow-x: hidden;
+  padding-bottom: 120px; /* room for floating next-button */
+}
+
+h1, h2, h3, .display{
+  font-family: var(--font-display);
+  color: var(--plum);
+  margin: 0 0 .4em;
+  line-height: 1.15;
+}
+
+p{ line-height: 1.7; }
+a{ color: inherit; }
+button{ font-family: inherit; }
+::selection{ background: var(--blush-deep); color: #fff; }
+
+:focus-visible{
+  outline: 3px solid var(--gold-deep);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ---------- Soft background sparkle field ---------- */
+.spark-field{
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .5;
+}
+.spark-field svg{ position: absolute; opacity: .6; }
+
+/* ---------- Minimal back link (top-left, unobtrusive) ---------- */
+.back-link{
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  position: absolute;
+  top: 1.4rem;
+  left: clamp(1rem, 4vw, 2rem);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: .85rem;
+  color: var(--gold-deep);
+  opacity: .75;
+  transition: opacity .2s ease, transform .2s ease;
+}
+.back-link:hover{ opacity: 1; transform: translateX(-2px); }
+.back-link svg{ width: 16px; height: 16px; }
+
+/* ---------- Layout shell ---------- */
+main{
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 3.2rem clamp(1.1rem, 5vw, 2rem) 2rem;
+  position: relative;
+}
+
+.hero{
+  text-align: center;
+  padding: clamp(1.5rem, 6vw, 3rem) 1rem 1rem;
+}
+.hero .eyebrow{
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  font-size: .72rem;
+  color: var(--gold-deep);
+  background: rgba(216,139,160,.14);
+  padding: .35rem .9rem;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+}
+.hero h1{
+  font-size: clamp(2.1rem, 6vw, 3.4rem);
+}
+.hero p.lede{
+  max-width: 46ch;
+  margin: .8rem auto 0;
+  font-size: 1.08rem;
+  color: var(--ink);
+}
+
+/* ---------- Cards / sections ---------- */
+.card{
+  background: var(--paper);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 30px var(--shadow-soft), 0 2px 6px var(--shadow-soft);
+  border: 1px solid rgba(255,255,255,.8);
+  padding: clamp(1.3rem, 4vw, 2.2rem);
+}
+
+/* ---------- Buttons ---------- */
+.btn{
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: .98rem;
+  padding: .8rem 1.6rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  background: var(--rose);
+  color: #fff;
+  box-shadow: 0 8px 18px var(--shadow);
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+  text-decoration: none;
+}
+.btn:hover{ transform: translateY(-2px); box-shadow: 0 12px 24px var(--shadow); background: var(--rose-deep); }
+.btn:active{ transform: translateY(0); }
+.btn.secondary{
+  background: var(--paper);
+  color: var(--rose-deep);
+  border: 2px solid var(--blush-deep);
+  box-shadow: none;
+}
+
+/* ---------- Floating "Next" progression button ---------- */
+.next-wrap{
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 40;
+  display: flex;
+  justify-content: center;
+  padding: 1rem clamp(.5rem, 4vw, 1.5rem) calc(1rem + env(safe-area-inset-bottom));
+  background: linear-gradient(to top, var(--cream) 55%, transparent);
+  pointer-events: none;
+}
+.next-wrap .btn{ pointer-events: auto; }
+.next-btn{
+  padding: .95rem 2.1rem;
+  font-size: 1.02rem;
+}
+.next-btn .sub{
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: .68rem;
+  opacity: .85;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.next-btn-inner{ display:flex; flex-direction:column; align-items:flex-start; line-height:1.2; }
+
+/* ---------- Section divider (heart trail) ---------- */
+.heart-divider{
+  display: flex;
+  justify-content: center;
+  gap: .9rem;
+  margin: 2.2rem 0;
+  opacity: .55;
+}
+.heart-divider svg{ width: 15px; height: 15px; }
+.heart-divider svg:nth-child(2){ transform: translateY(5px); }
+.heart-divider svg:nth-child(4){ transform: translateY(5px); }
+
+/* ---------- Speech-style callout ---------- */
+.speech{
+  position: relative;
+  background: var(--paper);
+  border: 1px solid var(--blush-deep);
+  border-radius: 18px;
+  padding: .6rem 1.1rem;
+  font-weight: 600;
+  font-size: .9rem;
+  color: var(--plum);
+  max-width: 320px;
+  margin: .4rem auto 0;
+  text-align: center;
+  box-shadow: 0 6px 16px var(--shadow-soft);
+}
+
+/* ---------- Footer ---------- */
+footer{
+  text-align: center;
+  padding: 1rem 1rem 6rem;
+  font-size: .85rem;
+  color: #a97b8c;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

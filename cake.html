@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Make a Wish — For You</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .cake-stage{
+    display:flex; flex-direction:column; align-items:center;
+    padding: 1.5rem 1rem 0.5rem;
+  }
+  .cake-svg{ width: min(340px, 80vw); }
+  .flame{ transform-origin: center bottom; transition: opacity .25s ease, transform .25s ease; cursor: pointer; }
+  .flame.out{ opacity: 0; transform: scale(.2) translateY(6px); }
+  .flame-flicker{ animation: flicker 1.4s ease-in-out infinite; transform-origin: center bottom; }
+  @keyframes flicker{
+    0%, 100%{ transform: scaleY(1) rotate(0deg); }
+    50%{ transform: scaleY(1.12) rotate(2deg); }
+  }
+  .smoke{ opacity: 0; }
+  .smoke.show{ animation: smokeUp 1.4s ease-out forwards; }
+  @keyframes smokeUp{
+    0%{ opacity: .55; transform: translateY(0) scale(.6); }
+    100%{ opacity: 0; transform: translateY(-26px) scale(1.3); }
+  }
+  .hint{ font-size:.85rem; color:#a97b8c; margin-top:.4rem; }
+  .fact-card{ display:none; text-align:center; margin-top: 1.6rem; }
+  .fact-card.show{ display:block; animation: popIn .4s ease; }
+  @keyframes popIn{ from{ opacity:0; transform: translateY(10px) scale(.97);} to{opacity:1; transform:none;} }
+  .confetti-piece{
+    position: fixed; top: -10px; z-index: 60; border-radius: 2px; pointer-events:none;
+    animation: confettiFall linear forwards;
+  }
+  @keyframes confettiFall{
+    to{ transform: translateY(105vh) rotate(540deg); opacity: .9; }
+  }
+</style>
+</head>
+<body data-page="cake">
+
+<div class="spark-field" aria-hidden="true"></div>
+
+<a class="back-link" href="gifts.html">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg>
+  back
+</a>
+
+<main>
+  <section class="hero" style="padding-top: 3rem;">
+    <span class="eyebrow">✨ two of two... almost</span>
+    <h1>Make a wish</h1>
+    <p class="lede">A little cake, just for you. Tap each candle (or hit the button) to blow them out.</p>
+  </section>
+
+  <section class="card cake-stage">
+    <svg class="cake-svg" viewBox="0 0 300 260" xmlns="http://www.w3.org/2000/svg">
+      <!-- plate -->
+      <ellipse cx="150" cy="238" rx="120" ry="14" fill="#F3D9F0"/>
+      <!-- bottom tier -->
+      <rect x="55" y="170" width="190" height="60" rx="14" fill="#FFC2DA"/>
+      <rect x="55" y="170" width="190" height="14" fill="#FF9EC4"/>
+      <!-- top tier -->
+      <rect x="90" y="120" width="120" height="55" rx="12" fill="#FFE1EC"/>
+      <rect x="90" y="120" width="120" height="12" fill="#FF9EC4"/>
+      <!-- drips -->
+      <path d="M90 132 q6 14 0 22 M115 128 q6 16 0 24 M150 126 q6 18 0 26 M185 128 q6 16 0 24 M210 132 q6 14 0 22" stroke="#FFF0F5" stroke-width="6" stroke-linecap="round" fill="none" opacity=".9"/>
+
+      <!-- candles -->
+      <g id="candles">
+        <g data-candle="1">
+          <rect x="106" y="96" width="6" height="26" rx="2" fill="#E14C7C"/>
+          <g class="smoke" data-smoke="1"><ellipse cx="109" cy="88" rx="4" ry="7" fill="#cbb9ad"/></g>
+          <g class="flame" data-flame="1"><path class="flame-flicker" d="M109 96 c-4 -6 0 -10 0 -14 c4 4 8 8 4 14 c-1 2 -3 2 -4 0z" fill="#FFB84D"/></g>
+        </g>
+        <g data-candle="2">
+          <rect x="131" y="90" width="6" height="32" rx="2" fill="#D98BA0"/>
+          <g class="smoke" data-smoke="2"><ellipse cx="134" cy="82" rx="4" ry="7" fill="#cbb9ad"/></g>
+          <g class="flame" data-flame="2"><path class="flame-flicker" d="M134 90 c-4 -6 0 -10 0 -14 c4 4 8 8 4 14 c-1 2 -3 2 -4 0z" fill="#FFB84D"/></g>
+        </g>
+        <g data-candle="3">
+          <rect x="156" y="86" width="6" height="36" rx="2" fill="#FF6F9C"/>
+          <g class="smoke" data-smoke="3"><ellipse cx="159" cy="78" rx="4" ry="7" fill="#cbb9ad"/></g>
+          <g class="flame" data-flame="3"><path class="flame-flicker" d="M159 86 c-4 -6 0 -10 0 -14 c4 4 8 8 4 14 c-1 2 -3 2 -4 0z" fill="#FFB84D"/></g>
+        </g>
+        <g data-candle="4">
+          <rect x="181" y="90" width="6" height="32" rx="2" fill="#E14C7C"/>
+          <g class="smoke" data-smoke="4"><ellipse cx="184" cy="82" rx="4" ry="7" fill="#cbb9ad"/></g>
+          <g class="flame" data-flame="4"><path class="flame-flicker" d="M184 90 c-4 -6 0 -10 0 -14 c4 4 8 8 4 14 c-1 2 -3 2 -4 0z" fill="#FFB84D"/></g>
+        </g>
+      </g>
+    </svg>
+
+    <p class="hint" id="cakeHint">4 candles left — tap a flame or use the button below.</p>
+    <button class="btn" id="blowBtn" style="margin-top:1rem;">Blow the candles</button>
+
+    <div class="fact-card" id="factCard">
+      <div class="heart-divider" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="#FF9EC4"><path d="M12 21s-7.5-4.6-10.2-9C-0.4 8.6 1.6 4 5.7 4c2.1 0 3.6 1.1 4.3 2.4C10.7 5.1 12.2 4 14.3 4c4.1 0 6.1 4.6 3.9 8-2.7 4.4-10.2 9-10.2 9z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#F3D9F0"><path d="M12 21s-7.5-4.6-10.2-9C-0.4 8.6 1.6 4 5.7 4c2.1 0 3.6 1.1 4.3 2.4C10.7 5.1 12.2 4 14.3 4c4.1 0 6.1 4.6 3.9 8-2.7 4.4-10.2 9-10.2 9z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#FF9EC4"><path d="M12 21s-7.5-4.6-10.2-9C-0.4 8.6 1.6 4 5.7 4c2.1 0 3.6 1.1 4.3 2.4C10.7 5.1 12.2 4 14.3 4c4.1 0 6.1 4.6 3.9 8-2.7 4.4-10.2 9-10.2 9z"/></svg>
+      </div>
+      <h2 style="font-size:1.3rem;">Wish made!</h2>
+      <p style="color:#a97b8c;">Here's a completely random, mildly useless fact as your reward:</p>
+      <p id="factText" class="speech" style="max-width: 420px; margin: .8rem auto;"></p>
+      <button class="btn secondary" id="anotherFact">Give me another one</button>
+    </div>
+  </section>
+</main>
+
+<div class="next-wrap">
+  <a class="btn next-btn" href="certificate.html">
+    <span class="next-btn-inner">
+      <span class="sub">Last one</span>
+      <span>Next →</span>
+    </span>
+  </a>
+</div>
+
+<footer>made with a lot of feelings, just for you</footer>
+
+<script src="script.js"></script>
+<script>
+  const facts = [
+    "Honey never spoils. Archaeologists have found 3,000-year-old honey that's still edible.",
+    "Bananas are berries, but strawberries aren't.",
+    "The Eiffel Tower grows about 6 inches taller in summer from heat expansion.",
+    "Wombats poop in cubes. Nobody fully knows why.",
+    "Sea otters hold hands while sleeping so they don't drift apart.",
+    "A shrimp's heart is in its head.",
+    "Cows have best friends and get stressed when separated from them.",
+    "Octopuses have three hearts and blue blood.",
+    "A cat's purr vibrates at a frequency linked to healing bone and tissue.",
+    "A group of kittens is called a 'kindle'."
+  ];
+
+  let remaining = 4;
+  const hint = document.getElementById('cakeHint');
+  const factCard = document.getElementById('factCard');
+  const factText = document.getElementById('factText');
+  const blowBtn = document.getElementById('blowBtn');
+
+  function updateHint(){
+    if(remaining > 0){
+      hint.textContent = `${remaining} candle${remaining === 1 ? '' : 's'} left — tap a flame or use the button below.`;
+    } else {
+      hint.textContent = "All candles out. Wish officially in progress.";
+    }
+  }
+
+  function extinguish(n){
+    const flame = document.querySelector(`[data-flame="${n}"]`);
+    const smoke = document.querySelector(`[data-smoke="${n}"]`);
+    if(!flame || flame.classList.contains('out')) return;
+    flame.classList.add('out');
+    smoke.classList.add('show');
+    remaining--;
+    updateHint();
+    if(remaining === 0){
+      celebrate();
+    }
+  }
+
+  document.querySelectorAll('.flame').forEach(f => {
+    f.addEventListener('click', () => extinguish(f.dataset.flame));
+  });
+
+  blowBtn.addEventListener('click', () => {
+    [1,2,3,4].forEach((n, i) => setTimeout(() => extinguish(String(n)), i * 180));
+  });
+
+  function randomFact(){
+    return facts[Math.floor(Math.random() * facts.length)];
+  }
+
+  function confettiBurst(){
+    const colors = ['#FF9EC4', '#F3D9F0', '#FFC2DA', '#D98BA0'];
+    for(let i = 0; i < 60; i++){
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      const size = 6 + Math.random() * 6;
+      piece.style.width = size + 'px';
+      piece.style.height = (size * 0.4) + 'px';
+      piece.style.left = Math.random() * 100 + 'vw';
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.animationDuration = (2.2 + Math.random() * 1.6) + 's';
+      document.body.appendChild(piece);
+      setTimeout(() => piece.remove(), 4200);
+    }
+  }
+
+  function celebrate(){
+    confettiBurst();
+    factText.textContent = randomFact();
+    factCard.classList.add('show');
+    blowBtn.style.display = 'none';
+  }
+
+  document.getElementById('anotherFact').addEventListener('click', () => {
+    factText.textContent = randomFact();
+  });
+</script>
+</body>
+</html>
